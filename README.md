@@ -52,6 +52,7 @@ nodemon app.js
 * jquery > 3.4.1
 * bootstrap > 5.11.2
 * popper
+* mongoose
 
 ## 專案貢獻者
 [Shawn](https://github.com/surferintaiwan)

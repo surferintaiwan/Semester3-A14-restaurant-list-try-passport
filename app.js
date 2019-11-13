@@ -65,7 +65,7 @@ app.get('/restaurants/:id', (req, res) => {
 // 餐廳的新增"頁面"
 // ??助教，為什麼我在路徑想寫'restaurants/new'，一直沒辦法成功運行呢?逼不得以只能使用'new' 
 app.get('/new', (req, res) => {
-    res.render('new')
+    res.render('new',{css: 'new.css'})
 })
 
 // POST進行餐廳資料新增
@@ -91,7 +91,10 @@ app.post('/new', (req, res) => {
 app.get('/restaurants/:id/edit', (req, res) => {
     Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
-        return res.render('edit', {restaurant: restaurant})
+        return res.render('edit', {
+            restaurant: restaurant,
+            css: 'edit.css'
+        })
     })
 })
 
