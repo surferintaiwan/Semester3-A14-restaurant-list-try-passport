@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const port = 3000
+const Restaurant = require('./models/restaurant.js')
 const allRestaurantData = require('./restaurant.json')
 
 // -- 設定mongoose --
@@ -34,22 +35,27 @@ app.use(express.static('public'))
 // -- 設定路由 --
 // 列出所有餐廳"頁面"
 app.get('/', (req, res) => {
-    const cssStyle = 'index'
-    res.render('index', {
-        restaurant: allRestaurantData.results,
-        css: 'index.css'
+    // 從資料庫抓資料放入頁面中
+    Restaurant.find((err,allRestaurants)=> {
+        if (err) return console.error(err)
+        res.render('index', {
+            restaurant: allRestaurants,
+            css: 'index.css'
+        })
     })
 })
 
 // 餐廳詳細資料"頁面"
 app.get('/restaurants/:id', (req, res) => {
-    const cssStyle = 'show'
-    let eachRestaurantData = allRestaurantData.results.find((restaurant) => {
-        return restaurant.id.toString() === req.params.id.toString()
-    })
-    res.render('show', {
-        restaurant: eachRestaurantData,
-        css: 'show.css'
+    // 讀取資料庫資料
+    Restaurant.find((err, allRestaurants) => {
+        let eachRestaurant = allRestaurants.find((restaurant)=>{
+            return restaurant.id.toString() === req.params.id.toString()   
+        })
+        res.render('show', {
+            restaurant: eachRestaurant,
+            css: 'show.css'
+        })
     })
 })
 
@@ -66,18 +72,20 @@ app.get('/restaurants/:id', (req, res) => {
 // 搜尋結果頁
 app.get('/search', (req, res) => {
     const cssStyle = 'index'
-    let searchRestaurant = allRestaurantData.results.filter((restaurant) => {
-        if (restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(req.query.keyword.toLowerCase()))
-        return true 
-    })
-    res.render('index', {
-        restaurant: searchRestaurant,
-        css: 'index.css',
-        value: req.query.keyword
+    Restaurant.find((err,allRestaurants) => {
+        let searchRestaurant = allRestaurants.filter((restaurant) => {
+            if (restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(req.query.keyword.toLowerCase()))
+            return true
+        })
+        res.render('index', {
+            restaurant: searchRestaurant,
+            css: 'index.css',
+            value: req.query.keyword
+        })
     })
 })
 
-// -- 啟用並監控Web Server --
+// -- 啟用並監控Server --
 app.listen(port,() => {
     console.log(`nodemon is listening http://localhost/${port}`)
 })

@@ -1,3 +1,4 @@
+// 此檔案僅需在一開始執行一次，將restaurant.json的餐廳資料倒進資料庫內
 const allRestaurantData = require('../restaurant.json').results
 const mongoose = require('mongoose')
 const Restaurant = require('./restaurant.js')
