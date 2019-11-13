@@ -1,24 +1,38 @@
-// define port
-const port = 3000
-
-// require express
+// --引入module--
 const express = require('express')
 const app = express()
-
-// require express-handlebars
 const exphbs = require('express-handlebars')
-
-// require restaurant data
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const port = 3000
 const allRestaurantData = require('./restaurant.json')
 
-// set template engine
+// -- 設定mongoose --
+// 連線至本地端資料庫
+mongoose.connect('mongodb://localhost/restaurant', { useUnifiedTopology: true })
+// 獲取connection 
+const db = mongoose.connection 
+// 連線異常
+db.on('error', () => {
+    console.log('mongoDB error!')
+})
+// 連線正常
+db.once('open', () => {
+    console.log('mongoDB connected!')
+})
+
+// -- 設定body-parser --
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// --設定handlebars--
 app.engine('handlebars', exphbs( {defaultLayout: 'main'} ))
 app.set('view engine', 'handlebars')
 
-// set static files (this place puts css, jquery and popper files)
+// -- 設定靜態檔案 -- (css, jquery and popper files)
 app.use(express.static('public'))
 
-// set routes (each template has its own css)
+// -- 設定路由 --
+// 列出所有餐廳"頁面"
 app.get('/', (req, res) => {
     const cssStyle = 'index'
     res.render('index', {
@@ -27,6 +41,7 @@ app.get('/', (req, res) => {
     })
 })
 
+// 餐廳詳細資料"頁面"
 app.get('/restaurants/:id', (req, res) => {
     const cssStyle = 'show'
     let eachRestaurantData = allRestaurantData.results.find((restaurant) => {
@@ -38,6 +53,17 @@ app.get('/restaurants/:id', (req, res) => {
     })
 })
 
+// 餐廳的新增"頁面"
+
+// POST進行餐廳資料新增
+
+// 餐廳的編輯"頁面"
+
+// POST進行餐廳資料編輯
+
+// POST進行餐廳資料刪除
+
+// 搜尋結果頁
 app.get('/search', (req, res) => {
     const cssStyle = 'index'
     let searchRestaurant = allRestaurantData.results.filter((restaurant) => {
@@ -49,28 +75,9 @@ app.get('/search', (req, res) => {
         css: 'index.css',
         value: req.query.keyword
     })
-    
-    // 這邊想將.card-columns印出來，但顯示document is not defined
-    // let cardColumns = window.document.querySelector('.card-columns')
-    // console.log(cardColumns)
 })
 
-// listen and launch server
+// -- 啟用並監控Web Server --
 app.listen(port,() => {
     console.log(`nodemon is listening http://localhost/${port}`)
 })
-
-// 上網查到jsdom這個module，但不知道怎麼引入我的html
-/*
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-
-const dom = new JSDOM(``, {
-    url: "http://localhost:3000/",
-    referrer: "https://example.com/",
-    contentType: "text/html",
-    includeNodeLocations: true,
-    storageQuota: 10000000
-  });
-console.log()
-*/
