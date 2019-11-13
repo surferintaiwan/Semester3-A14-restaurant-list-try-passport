@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const port = 3000
 const Restaurant = require('./models/restaurant.js')
-const allRestaurantData = require('./restaurant.json')
+
 
 // -- 設定mongoose --
 // 連線至本地端資料庫
@@ -63,14 +63,29 @@ app.get('/restaurants/:id', (req, res) => {
 })
 
 // 餐廳的新增"頁面"
-app.get('/restaurants/new', (req, res) => {
-    
+// ??助教，為什麼我在路徑想寫'restaurants/new'，一直沒辦法成功運行呢?逼不得以只能使用'new' 
+app.get('/new', (req, res) => {
+    res.render('new')
 })
 
 // POST進行餐廳資料新增
-app.post('restaurants/new', (req, res) => {
-
+app.post('/new', (req, res) => {
+    const restaurant = new Restaurant({
+        name: req.body.name,
+        category: req.body.category,
+        location: req.body.location,
+        phone: req.body.phone,
+        description: req.body.description,
+        image: req.body.image,
+        rating: req.body.rating
+    })
+    restaurant.save(err => {
+        if (err) return console.error(err)
+        return res.redirect('/restaurants')
+        // ??助教，請問這邊有甚麼辦法可以直接拿到剛剛存進資料庫的id嗎? 因為我想要再新增完資料後先跳轉到餐廳詳細頁面，而不是跳轉到所有餐廳頁面。
+    })
 })
+
 
 // 餐廳的編輯"頁面"
 app.get('/restaurants/:id/edit', (req, res) => {
@@ -90,6 +105,13 @@ app.post('/restaurants/:id/edit', (req, res) => {
         restaurant.phone = req.body.phone
         restaurant.description = req.body.description
         restaurant.image = req.body.image
+        restaurant.rating = req.body.rating
+        // ??助教，請問上面這幾行看起來重複性很高的程式碼，為什麼沒辦法用下面這個迴圈跑呢??
+        /*
+        for (let eachItem in restaurant) {
+            restaurant[eachItem] = req.body[eachItem]
+        } 
+        */
         restaurant.save(err, ()=> {
             if (err) console.error(err)
         })
@@ -98,6 +120,17 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 // POST進行餐廳資料刪除
+app.post('/restaurants/:id/delete',(req, res)=>{
+    Restaurant.findById(req.params.id,(err, restaurant)=>{
+        if (err) return console.error(err)
+        restaurant.remove(err, () => {
+            if (err) return console.error(err)
+            return res.redirect('/restaurants')
+        })
+        
+    })
+})
+
 
 // 搜尋結果頁
 app.get('/search', (req, res) => {
