@@ -74,3 +74,6 @@ header {
     }
   }
   
+  .form-for-delete {
+    display: inline;
+  }

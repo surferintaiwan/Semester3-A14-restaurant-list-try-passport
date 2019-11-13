@@ -33,9 +33,13 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 // -- 設定路由 --
-// 列出所有餐廳"頁面"
+// 首頁自動跳轉至所有餐廳"頁面"
 app.get('/', (req, res) => {
-    // 從資料庫抓資料放入頁面中
+    res.redirect('/restaurants')
+})
+
+// 列出所有餐廳"頁面"
+app.get('/restaurants', (req,res) => [
     Restaurant.find((err,allRestaurants)=> {
         if (err) return console.error(err)
         res.render('index', {
@@ -43,29 +47,55 @@ app.get('/', (req, res) => {
             css: 'index.css'
         })
     })
-})
+])
 
 // 餐廳詳細資料"頁面"
 app.get('/restaurants/:id', (req, res) => {
-    // 讀取資料庫資料
     Restaurant.find((err, allRestaurants) => {
         let eachRestaurant = allRestaurants.find((restaurant)=>{
             return restaurant.id.toString() === req.params.id.toString()   
         })
-        res.render('show', {
+        res.render('detail', {
             restaurant: eachRestaurant,
-            css: 'show.css'
+            css: 'detail.css'
         })
     })
 })
 
 // 餐廳的新增"頁面"
+app.get('/restaurants/new', (req, res) => {
+    
+})
 
 // POST進行餐廳資料新增
+app.post('restaurants/new', (req, res) => {
+
+})
 
 // 餐廳的編輯"頁面"
+app.get('/restaurants/:id/edit', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
+        if (err) return console.error(err)
+        return res.render('edit', {restaurant: restaurant})
+    })
+})
 
 // POST進行餐廳資料編輯
+app.post('/restaurants/:id/edit', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
+        if (err) return console.error(err)
+        restaurant.name = req.body.name
+        restaurant.category = req.body.category
+        restaurant.location = req.body.location
+        restaurant.phone = req.body.phone
+        restaurant.description = req.body.description
+        restaurant.image = req.body.image
+        restaurant.save(err, ()=> {
+            if (err) console.error(err)
+        })
+        return res.redirect('/restaurants/' + req.params.id)
+    })
+})
 
 // POST進行餐廳資料刪除
 

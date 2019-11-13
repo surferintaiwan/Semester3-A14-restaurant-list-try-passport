@@ -2,7 +2,6 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
-
       <p class="mb-1">
         <span class="text-secondary">
           <i class="fas fa-utensils pr-2"></i>
@@ -35,6 +34,13 @@
       </p>
 
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}" style="max-width: 600px;">
+      <div class="text-center">
+        <a href="/restaurants/{{restaurant.id}}/edit" class="btn btn-secondary mr-1 mb-1">Edit</a>
+        <form action="/restaurants/{{restaurant.id}}/delete" method="POST" class="form-for-delete">
+          <button type="submit" class="btn btn-outline-warning mr-1 mb-1">Delete</button>
+        </form>
+      </div>
     </div>
+    
   </div>
 </div>
