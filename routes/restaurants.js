@@ -13,6 +13,40 @@ router.get('/', (req,res) => [
     })
 ])
 
+router.post('/sort', (req,res) => {
+    let sort = {}
+    let sortSetting = {}
+    if (req.body.sort === 'asc') {
+        sort.asc = true
+        sortSetting.name = 'asc'
+        console.log(111)
+    } else if (req.body.sort === 'desc') {
+        sort.desc = true
+        sortSetting.name = 'desc'
+        console.log(222)
+    } else if (req.body.sort === 'location') {
+        sort.location = true
+        sortSetting.location = 'asc'
+        console.log(333)
+    } else if (req.body.sort === 'category') {
+        sort.category = true
+        sortSetting.category = 'asc'
+        console.log(444)
+    }
+    console.log(sortSetting)
+    console.log(sort)
+    Restaurant.find({})
+        .sort(sortSetting)
+        .exec((err, allRestaurants) => {
+            if (err) return console.error(err)
+            res.render('index', {
+                restaurant: allRestaurants,
+                css: 'index.css',
+                sort: sort
+            })
+        })
+})
+
 // 餐廳的新增"頁面"
 router.get('/new', (req, res) => {
     res.render('new', {css: 'new.css'})

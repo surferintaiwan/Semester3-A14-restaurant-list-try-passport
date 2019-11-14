@@ -17,6 +17,15 @@
 
 <!-- restaurant list -->
 <div class="container mt-5">
+  <form action="/restaurants/sort" method="POST" class="text-right">
+    <label for="sort">請選擇排序方式</label>
+    <select name="sort" id="sort">
+      <option value="asc" {{#if sort.asc}}selected{{/if}}>A-Z</option>
+      <option value="desc" {{#if sort.desc}}selected{{/if}}>Z-A</option>
+      <option value="location" {{#if sort.location}}selected{{/if}}>地區</option>
+      <option value="category" {{#if sort.category}}selected{{/if}}>類別</option>
+    </select>
+  </form>
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
