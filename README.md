@@ -2,7 +2,7 @@
 此網站使用node.js環境 + Express + mongoDB建立而成，可供用戶搜尋網站上的店家或瀏覽店家詳細資料。
 
 ## 網站截圖
-![網站截圖](https://github.com/surferintaiwan/Semester3-A10-restaurant-list-try-CRUD/blob/master/index-photo.png?raw=true)
+![網站截圖](https://github.com/surferintaiwan/Semester3-A11-restaurant-list-try-RESTful/blob/master/index-photo.png?raw=true)
 
 ## 功能說明
 1. 瀏覽所有店家
@@ -20,7 +20,7 @@
 4. 使用者可刪除店家(首頁及詳細店家介紹頁面)
 5. 使用者可編輯店家(首頁及詳細店家介紹頁面)
 6. 使用者可新增店家(點擊右上角Add a restaurant)
-7. 餐廳列表可依據不同方式排序
+7. 餐廳列表可依據不同方式排序(可依店名、位置、餐廳類別、評分排序)
 
 ## 開始使用
 1. 下載本專案檔案至本地端
