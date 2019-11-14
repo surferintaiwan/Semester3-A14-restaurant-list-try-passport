@@ -18,19 +18,6 @@ router.get('/new', (req, res) => {
     res.render('new', {css: 'new.css'})
 })
 
-// 餐廳詳細資料"頁面"
-router.get('/:id', (req, res) => {
-    Restaurant.find((err, allRestaurants) => {
-        let eachRestaurant = allRestaurants.find((restaurant)=>{
-            return restaurant.id.toString() === req.params.id.toString()   
-        })
-        res.render('detail', {
-            restaurant: eachRestaurant,
-            css: 'detail.css'
-        })
-    })
-})
-
 // POST進行餐廳資料新增
 router.post('/new', (req, res) => {
     const restaurant = new Restaurant({
@@ -48,6 +35,19 @@ router.post('/new', (req, res) => {
     })
 })
 
+// 餐廳詳細資料"頁面"
+router.get('/:id', (req, res) => {
+    Restaurant.find((err, allRestaurants) => {
+        let eachRestaurant = allRestaurants.find((restaurant)=>{
+            return restaurant.id.toString() === req.params.id.toString()   
+        })
+        res.render('detail', {
+            restaurant: eachRestaurant,
+            css: 'detail.css'
+        })
+    })
+})
+
 // 餐廳的編輯"頁面"
 router.get('/:id/edit', (req, res) => {
     Restaurant.findById(req.params.id, (err, restaurant) => {
@@ -59,8 +59,8 @@ router.get('/:id/edit', (req, res) => {
     })
 })
 
-// POST進行餐廳資料編輯
-router.post('/:id/edit', (req, res) => {
+// PUT進行餐廳資料編輯
+router.put('/:id/edit', (req, res) => {
     Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
         restaurant.name = req.body.name
@@ -77,8 +77,8 @@ router.post('/:id/edit', (req, res) => {
     })
 })
 
-// POST進行餐廳資料刪除
-router.post('/:id/delete',(req, res)=>{
+// DELETE進行餐廳資料刪除
+router.delete('/:id',(req, res)=>{
     Restaurant.findById(req.params.id,(err, restaurant)=>{
         if (err) return console.error(err)
         restaurant.remove(err, () => {

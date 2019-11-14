@@ -41,7 +41,6 @@ app.use('/', require('./routes/home.js'))
 app.use('/restaurants', require('./routes/restaurants.js'))
 app.use('/search', require('./routes/search.js'))
 
-
 // -- 啟用並監控Server --
 app.listen(port,() => {
     console.log(`nodemon is listening http://localhost/${port}`)
