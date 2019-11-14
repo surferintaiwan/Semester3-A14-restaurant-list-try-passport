@@ -17,15 +17,19 @@
 
 <!-- restaurant list -->
 <div class="container mt-5">
-  <form action="/restaurants/sort" method="POST" class="text-right">
+  <div class="row justify-content-end mb-4">
+  <form action="/restaurants/sort" method="POST" class="col-3">
     <label for="sort">請選擇排序方式</label>
-    <select name="sort" id="sort">
-      <option value="asc" {{#if sort.asc}}selected{{/if}}>A-Z</option>
-      <option value="desc" {{#if sort.desc}}selected{{/if}}>Z-A</option>
+    <select name="sort" id="sort" class="form-control">
+      <option value="name-asc" {{#if sort.asc}}selected{{/if}}>A-Z</option>
+      <option value="name-desc" {{#if sort.desc}}selected{{/if}}>Z-A</option>
       <option value="location" {{#if sort.location}}selected{{/if}}>地區</option>
       <option value="category" {{#if sort.category}}selected{{/if}}>類別</option>
+      <option value="rating-asc" {{#if sort.rating}}selected{{/if}}>評分 低>高</option>
+      <option value="rating-desc" {{#if sort.rating}}selected{{/if}}>評分 高>低</option>
     </select>
   </form>
+  </div>
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">

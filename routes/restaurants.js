@@ -13,28 +13,32 @@ router.get('/', (req,res) => [
     })
 ])
 
+// POST將排序方式傳進來
 router.post('/sort', (req,res) => {
     let sort = {}
     let sortSetting = {}
-    if (req.body.sort === 'asc') {
+    // 判斷是哪種排序方式
+    if (req.body.sort === 'name-asc') {
         sort.asc = true
         sortSetting.name = 'asc'
-        console.log(111)
-    } else if (req.body.sort === 'desc') {
+    } else if (req.body.sort === 'name-desc') {
         sort.desc = true
         sortSetting.name = 'desc'
-        console.log(222)
     } else if (req.body.sort === 'location') {
         sort.location = true
         sortSetting.location = 'asc'
-        console.log(333)
     } else if (req.body.sort === 'category') {
         sort.category = true
         sortSetting.category = 'asc'
-        console.log(444)
+    } else if (req.body.sort === 'rating-asc') {
+        sort.rating = true
+        sortSetting.rating = 'asc'
+    } else if (req.body.sort === 'rating-desc') {
+        sort.rating = true
+        sortSetting.rating = 'desc'
     }
-    console.log(sortSetting)
-    console.log(sort)
+
+    // 依據不同的排序方式，至資料庫索取排序後的資料
     Restaurant.find({})
         .sort(sortSetting)
         .exec((err, allRestaurants) => {

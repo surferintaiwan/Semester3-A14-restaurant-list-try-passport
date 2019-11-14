@@ -17,18 +17,19 @@
 
 使用者可於搜尋欄輸入中英文，查詢與店家名稱匹配之店家
 
-4. 可於首頁及詳細店家介紹頁面進行刪除
-5. 可於首頁及詳細店家介紹頁面進行編輯
-6. 可於畫面右上角點擊Add a restaurant進行新增
+4. 使用者可刪除店家(首頁及詳細店家介紹頁面)
+5. 使用者可編輯店家(首頁及詳細店家介紹頁面)
+6. 使用者可新增店家(點擊右上角Add a restaurant)
+7. 餐廳列表可依據不同方式排序
 
 ## 開始使用
 1. 下載本專案檔案至本地端
 ```
-git clone https://github.com/surferintaiwan/Semester3-A10-restaurant-list-try-CRUD.git
+git clone https://github.com/surferintaiwan/Semester3-A11-restaurant-list-try-RESTful.git
 ```
 2. 於終端機打開專案檔案
 ```
-cd Semester3-A10-restaurant-list-try-CRUD
+cd Semester3-A11-restaurant-list-try-RESTful
 ```
 3. 於終端機安裝npm
 
@@ -64,6 +65,7 @@ nodemon app.js
 * bootstrap > 5.11.2
 * popper
 * mongoose
+* method-override
 
 ## 專案貢獻者
 [Shawn](https://github.com/surferintaiwan)
