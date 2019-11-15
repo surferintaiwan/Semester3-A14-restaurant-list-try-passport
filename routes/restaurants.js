@@ -13,28 +13,21 @@ router.get('/', (req,res) => [
     })
 ])
 
-// POST將排序方式傳進來
-router.post('/sort', (req,res) => {
-    let sort = {}
+// 將餐廳進行排序
+router.get('/sort/:sort', (req,res) => {
     let sortSetting = {}
     // 判斷是哪種排序方式
-    if (req.body.sort === 'name-asc') {
-        sort.asc = true
+    if (req.params.sort === 'name-asc') {
         sortSetting.name = 'asc'
-    } else if (req.body.sort === 'name-desc') {
-        sort.desc = true
+    } else if (req.params.sort === 'name-desc') {
         sortSetting.name = 'desc'
-    } else if (req.body.sort === 'location') {
-        sort.location = true
+    } else if (req.params.sort === 'location') {
         sortSetting.location = 'asc'
-    } else if (req.body.sort === 'category') {
-        sort.category = true
+    } else if (req.params.sort === 'category') {
         sortSetting.category = 'asc'
-    } else if (req.body.sort === 'rating-asc') {
-        sort.rating = true
+    } else if (req.params.sort === 'rating-asc') {
         sortSetting.rating = 'asc'
-    } else if (req.body.sort === 'rating-desc') {
-        sort.rating = true
+    } else if (req.params.sort === 'rating-desc') {
         sortSetting.rating = 'desc'
     }
 
@@ -46,7 +39,6 @@ router.post('/sort', (req,res) => {
             res.render('index', {
                 restaurant: allRestaurants,
                 css: 'index.css',
-                sort: sort
             })
         })
 })
