@@ -1,1 +1,29 @@
-<h1>register</h1>
+<div class="row">
+  <div class="col-4 m-auto">
+    <h1 class="text-center">Login</h1>
+    <div class="card">
+      <div class="card-body">
+        <form action="/users/register" method="POST">    
+          <div class="form-group">
+            <label for="name">名字</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="輸入您的名字">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="輸入您的email">
+          </div>
+          <div class="form-group">
+            <label for="password">密碼</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="輸入您的密碼">
+          </div>
+          <div class="form-group">
+            <label for="password2">再次輸入密碼</label>
+            <input type="password2" name="password2" class="form-control" id="password2" placeholder="請再次輸入密碼">
+          </div>
+          <button type="submit" class="btn btn-warning btn-block">Submit</button>
+          <p class="lead mt-2">已經有帳號?<a href="/users/login">直接登入</a> </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
