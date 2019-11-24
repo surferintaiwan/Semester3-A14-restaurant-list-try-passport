@@ -10,6 +10,11 @@ const methodOverride = require('method-override')
 const session = require('express-session') 
 const passport = require('passport')
 
+// 判別開發環境
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
 // -- 設定mongoose --
 // 連線至本地端資料庫
 mongoose.connect('mongodb://localhost/restaurant', { useUnifiedTopology: true, useNewUrlParser: true,  useCreateIndex: true})
@@ -63,6 +68,7 @@ app.use('/', require('./routes/home.js'))
 app.use('/restaurants', require('./routes/restaurants.js'))
 app.use('/search', require('./routes/search.js'))
 app.use('/users', require('./routes/user.js'))
+app.use('/auth', require('./routes/auths.js'))
 
 // -- 啟用並監控Server --
 app.listen(port,() => {
