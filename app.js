@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const port = 3000
 const Restaurant = require('./models/restaurant.js')
 const methodOverride = require('method-override')
-
+const session = require('express-session') 
 
 // -- 設定mongoose --
 // 連線至本地端資料庫
@@ -32,6 +32,13 @@ app.set('view engine', 'handlebars')
 
 // -- 設定靜態檔案 -- (css, jquery and popper files)
 app.use(express.static('public'))
+
+// 設定express-session
+app.use(session({
+    secret: 'my restaurant key',   // secret: 定義一組屬於你的字串做為私鑰
+    resave: false,
+    saveUninitialized: true,
+  }))
 
 // -- 設定method-override --
 app.use(methodOverride('_method'))
