@@ -51,6 +51,7 @@ require('./config/passport.js')(passport)
 // 儲存變數給view使用
 app.use((req, res, next) => {
     res.locals.user = req.user
+    res.locals.isAuthenticated = req.isAuthenticated()
     next()
 })
 

@@ -22,7 +22,11 @@
                         </a>
                     </div>
                     <div class="col-6 btn">
-                        <a href="/restaurants/new">Add a restaurant</a>
+                        {{#if isAuthenticated}}
+                            <a href="/users/login">登出</a>
+                        {{else}}
+                            <a href="/users/logout">登入</a>
+                        {{/if}}
                     </div>
                 </div>
             </div>
