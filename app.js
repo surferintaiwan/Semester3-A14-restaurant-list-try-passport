@@ -8,6 +8,7 @@ const port = 3000
 const Restaurant = require('./models/restaurant.js')
 const methodOverride = require('method-override')
 const session = require('express-session') 
+const passport = require('passport')
 
 // -- 設定mongoose --
 // 連線至本地端資料庫
@@ -33,12 +34,25 @@ app.set('view engine', 'handlebars')
 // -- 設定靜態檔案 -- (css, jquery and popper files)
 app.use(express.static('public'))
 
-// 設定express-session
+// 使用express-session
 app.use(session({
     secret: 'my restaurant key',   // secret: 定義一組屬於你的字串做為私鑰
     resave: false,
     saveUninitialized: true,
   }))
+
+// 使用passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+// 載入.config/passport.js
+require('./config/passport.js')(passport)
+
+// 儲存變數給view使用
+app.use((req, res, next) => {
+    res.locals.user = req.user
+    next()
+})
 
 // -- 設定method-override --
 app.use(methodOverride('_method'))
