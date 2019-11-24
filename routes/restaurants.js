@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurant.js')
+const {authenticated} = require('../config/auth.js') 
 
 // 列出所有餐廳"頁面"
-router.get('/', (req,res) => [
+router.get('/',authenticated ,(req,res) => [
     Restaurant.find((err,allRestaurants)=> {
         if (err) return console.error(err)
         res.render('index', {
@@ -14,7 +15,7 @@ router.get('/', (req,res) => [
 ])
 
 // 將餐廳進行排序
-router.get('/sort/:sort', (req,res) => {
+router.get('/sort/:sort', authenticated, (req,res) => {
     let sortSetting = {}
     // 判斷是哪種排序方式
     if (req.params.sort === 'name-asc') {
@@ -44,12 +45,12 @@ router.get('/sort/:sort', (req,res) => {
 })
 
 // 餐廳的新增"頁面"
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
     res.render('new', {css: 'new.css'})
 })
 
 // POST進行餐廳資料新增
-router.post('/new', (req, res) => {
+router.post('/new', authenticated, (req, res) => {
     const restaurant = new Restaurant({
         name: req.body.name,
         category: req.body.category,
@@ -66,7 +67,7 @@ router.post('/new', (req, res) => {
 })
 
 // 餐廳詳細資料"頁面"
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticated, (req, res) => {
     Restaurant.find((err, allRestaurants) => {
         let eachRestaurant = allRestaurants.find((restaurant)=>{
             return restaurant.id.toString() === req.params.id.toString()   
@@ -79,7 +80,7 @@ router.get('/:id', (req, res) => {
 })
 
 // 餐廳的編輯"頁面"
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', authenticated, (req, res) => {
     Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
         return res.render('edit', {
@@ -90,7 +91,7 @@ router.get('/:id/edit', (req, res) => {
 })
 
 // PUT進行餐廳資料編輯
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', authenticated, (req, res) => {
     Restaurant.findById(req.params.id, (err, restaurant) => {
         if (err) return console.error(err)
         restaurant.name = req.body.name
@@ -108,7 +109,7 @@ router.put('/:id/edit', (req, res) => {
 })
 
 // DELETE進行餐廳資料刪除
-router.delete('/:id',(req, res)=>{
+router.delete('/:id', authenticated,(req, res)=>{
     Restaurant.findById(req.params.id,(err, restaurant)=>{
         if (err) return console.error(err)
         restaurant.remove(err, () => {

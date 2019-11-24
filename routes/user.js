@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user.js')
 const passport = require('passport')
+const {authenticated} = require('../config/auth.js')
 
 router.get('/login', (req, res) => {
     res.render('login')
@@ -24,7 +25,7 @@ router.post('/register', (req, res) => {
         // 如果使用者存在，就回到註冊頁
         if (user) {
             console.log('使用者存在')
-            res.render('register',{
+            res.render('register', {
                 name,
                 email,
                 password,

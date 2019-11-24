@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurant.js')
+const authenticated = require('../config/auth.js')
 
 let value = ''
 // 顯示搜尋結果頁
@@ -59,11 +60,8 @@ router.get('/sort/:sort', (req, res) => {
             restaurant: searchRestaurant,
             css: 'index.css',
             value: value,
-        })
-        
-    })
-    
+        })  
+    })    
 })
-
 
 module.exports = router
