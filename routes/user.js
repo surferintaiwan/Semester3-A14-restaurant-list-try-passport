@@ -3,6 +3,7 @@ const router = express.Router()
 const User = require('../models/user.js')
 const passport = require('passport')
 const {authenticated} = require('../config/auth.js')
+const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
     res.render('login')
@@ -37,12 +38,22 @@ router.post('/register', (req, res) => {
                 email,
                 password
             })
-            newUser
-                .save()
-                .then(user => {
-                    res.redirect('/')
+
+            // 使用bcrypt對密碼做處理
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if (err) throw err
+                    newUser.password = hash
+                    // 把這個新的user資料都存起來
+                    newUser
+                        .save()
+                        .then(user => {
+                            res.redirect('/')
+                        })
+                        .catch(err => console.log(err))
                 })
-                .catch(err => console.log(err))
+            })
+            
         }
     })
 })
