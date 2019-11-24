@@ -12,7 +12,7 @@ const passport = require('passport')
 
 // -- 設定mongoose --
 // 連線至本地端資料庫
-mongoose.connect('mongodb://localhost/restaurant', { useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/restaurant', { useUnifiedTopology: true, useNewUrlParser: true,  useCreateIndex: true})
 // 獲取connection 
 const db = mongoose.connection 
 // 連線異常

@@ -5,6 +5,15 @@ const {authenticated} = require('../config/auth.js')
 
 // 列出所有餐廳"頁面"
 router.get('/',authenticated ,(req,res) => [
+    Restaurant.find({userId : req.user._id})
+        .exec((err,allRestaurants)=> {
+            if (err) return console.error(err)
+            res.render('index', {
+                restaurant: allRestaurants,
+                css: 'index.css'
+            })
+        })
+    /* 這是原本還沒有加上userId關聯的時候寫法
     Restaurant.find((err,allRestaurants)=> {
         if (err) return console.error(err)
         res.render('index', {
@@ -12,6 +21,7 @@ router.get('/',authenticated ,(req,res) => [
             css: 'index.css'
         })
     })
+    */
 ])
 
 // 將餐廳進行排序
@@ -33,7 +43,7 @@ router.get('/sort/:sort', authenticated, (req,res) => {
     }
 
     // 依據不同的排序方式，至資料庫索取排序後的資料
-    Restaurant.find({})
+    Restaurant.find({userId: req.user._id})
         .sort(sortSetting)
         .exec((err, allRestaurants) => {
             if (err) return console.error(err)
@@ -58,7 +68,8 @@ router.post('/new', authenticated, (req, res) => {
         phone: req.body.phone,
         description: req.body.description,
         image: req.body.image,
-        rating: req.body.rating
+        rating: req.body.rating,
+        userId: req.user._id
     })
     restaurant.save(err => {
         if (err) return console.error(err)
@@ -68,6 +79,14 @@ router.post('/new', authenticated, (req, res) => {
 
 // 餐廳詳細資料"頁面"
 router.get('/:id', authenticated, (req, res) => {
+    Restaurant.findOne({userId: req.user._id, _id:req.params.id}, (err, eachRestaurant) => {
+        res.render('detail', {
+            restaurant: eachRestaurant,
+            css: 'detail.css'
+        })
+    })
+
+    /* 這是原本還沒有加上userId關聯的時候寫法
     Restaurant.find((err, allRestaurants) => {
         let eachRestaurant = allRestaurants.find((restaurant)=>{
             return restaurant.id.toString() === req.params.id.toString()   
@@ -77,11 +96,12 @@ router.get('/:id', authenticated, (req, res) => {
             css: 'detail.css'
         })
     })
+    */
 })
 
 // 餐廳的編輯"頁面"
 router.get('/:id/edit', authenticated, (req, res) => {
-    Restaurant.findById(req.params.id, (err, restaurant) => {
+    Restaurant.findOne({userId: req.user._id, _id: req.params.id}, (err, restaurant) => {
         if (err) return console.error(err)
         return res.render('edit', {
             restaurant: restaurant,
@@ -92,7 +112,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 
 // PUT進行餐廳資料編輯
 router.put('/:id/edit', authenticated, (req, res) => {
-    Restaurant.findById(req.params.id, (err, restaurant) => {
+    Restaurant.findOne({userId: req.user._id, _id:req.params.id}, (err, restaurant) => {
         if (err) return console.error(err)
         restaurant.name = req.body.name
         restaurant.category = req.body.category
@@ -110,7 +130,7 @@ router.put('/:id/edit', authenticated, (req, res) => {
 
 // DELETE進行餐廳資料刪除
 router.delete('/:id', authenticated,(req, res)=>{
-    Restaurant.findById(req.params.id,(err, restaurant)=>{
+    Restaurant.findOne({userId: req.user._id, _id:req.params.id}, (err, restaurant)=>{
         if (err) return console.error(err)
         restaurant.remove(err, () => {
             if (err) return console.error(err)
