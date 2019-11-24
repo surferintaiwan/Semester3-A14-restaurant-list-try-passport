@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurant.js')
-const authenticated = require('../config/auth.js')
+const {authenticated} = require('../config/auth.js')
 
 let value = ''
 // 顯示搜尋結果頁
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
     let sortSetting = {}
     // 儲存關鍵字，如果在搜尋結果頁有選擇排序，那麼下一個路由就可以使用了
     value = req.query.keyword
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 })
 
 // 於搜尋結果頁按不同排序方式呈現
-router.get('/sort/:sort', (req, res) => {
+router.get('/sort/:sort', authenticated, (req, res) => {
     let sortSetting = {}
     // 判斷是哪種排序方式
     let sort = req.params.sort
