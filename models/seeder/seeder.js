@@ -19,7 +19,7 @@ db.once('open', () => {
         email: '111@xxx.com',
         password: '123'
     })
-    // 用bcryptjs加鹽後儲存
+    // 用bcryptjs加鹽後儲存，接著將餐廳資料導入
     bcrypt.genSalt(10, (err,salt)=> {
         bcrypt.hash(user1.password, salt, (err,hash)=> {
             if (err) throw err
@@ -34,9 +34,9 @@ db.once('open', () => {
                 .catch(err => {console.log(err)})
         })
     })
-    // 透過email找到使用者的_id，把三間餐廳存進去的同時，將_id存進去餐廳的userId
+    
     /* ??助教，原本想把這段放在外面，可是user印出來是undefined
-        User.findOne({email: 'bbb@xxx.com'}, (err, user) => {
+        User1.findOne({email: 'bbb@xxx.com'}, (err, user) => {
         console.log('找到了')
         console.log(user)
     })
@@ -49,7 +49,7 @@ db.once('open', () => {
         email: '222@xxx.com',
         password: '123'
     })
-    // 用bcryptjs加鹽後儲存
+    // 用bcryptjs加鹽後儲存，接著將餐廳資料導入
     bcrypt.genSalt(10, (err,salt)=> {
         bcrypt.hash(user2.password, salt, (err,hash)=> {
             if (err) throw err
