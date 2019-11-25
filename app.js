@@ -9,6 +9,7 @@ const Restaurant = require('./models/restaurant.js')
 const methodOverride = require('method-override')
 const session = require('express-session') 
 const passport = require('passport')
+const flash = require('connect-flash')
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {
@@ -53,10 +54,15 @@ app.use(passport.session())
 // 載入.config/passport.js
 require('./config/passport.js')(passport)
 
+// 使用connect.flash
+app.use(flash())
+
 // 儲存變數給view使用
 app.use((req, res, next) => {
     res.locals.user = req.user
     res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.warning_msg = req.flash('warning_msg')
     next()
 })
 

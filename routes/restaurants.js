@@ -80,6 +80,7 @@ router.post('/new', authenticated, (req, res) => {
 // 餐廳詳細資料"頁面"
 router.get('/:id', authenticated, (req, res) => {
     Restaurant.findOne({userId: req.user._id, _id:req.params.id}, (err, eachRestaurant) => {
+        console.log(eachRestaurant)
         res.render('detail', {
             restaurant: eachRestaurant,
             css: 'detail.css'

@@ -23,6 +23,27 @@ router.get('/register', (req, res)=> {
 router.post('/register', (req, res) => {
     const {name, email, password, password2} = req.body
     User.findOne({email: email}).then(user => {
+        // 這裡會經過兩道關卡
+        // 第一關是判斷註冊資訊有沒有漏掉的地方
+        let errors = []
+        if (!email || !password || !password2) {
+            errors.push({message: '除了姓名以外，其他都是必填的喔'})
+        }
+
+        if (password !== password2) {
+            errors.push({message: '兩次密碼不相符'})
+        }
+
+        if (errors.length > 0) {
+            res.render('register', {
+                name,
+                email,
+                password,
+                password2,
+                errors
+            })
+        } else {
+        // 第二關才會判斷使用者有沒有存在
         // 如果使用者存在，就回到註冊頁
         if (user) {
             console.log('使用者存在')
@@ -30,9 +51,11 @@ router.post('/register', (req, res) => {
                 name,
                 email,
                 password,
-                password2
+                password2,
+                errors
             })
-        } else {   // 如果使用者不存在，就儲存到資料庫
+        } else {
+            // 如果使用者不存在，就儲存到資料庫
             const newUser = new User({
                 name,
                 email,
@@ -48,18 +71,24 @@ router.post('/register', (req, res) => {
                     newUser
                         .save()
                         .then(user => {
-                            res.redirect('/')
+                            req.flash('success_msg', '註冊成功')
+                            res.redirect('/users/login')
                         })
                         .catch(err => console.log(err))
                 })
             })
             
         }
+        }
+
+        
+        
     })
 })
 
 router.get('/logout', (req, res) => {
     req.logout()
+    req.flash('success_msg', '您已經登出了')
     res.redirect('/users/login')
 })
 

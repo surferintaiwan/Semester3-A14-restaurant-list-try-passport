@@ -13,6 +13,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
     "dot": "^1.1.2",
     "dotenv": "^8.2.0",
     "env": "0.0.2",
