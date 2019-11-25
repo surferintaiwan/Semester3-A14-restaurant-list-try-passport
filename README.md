@@ -84,6 +84,7 @@ WXYZ Bar
  * 在設定頁面輸入有效的OAuth重新導向URL>http://localhost:3000/auth/facebook/callback
  * 請在根目錄下新增.env
  * 檔案內儲存如下(記得輸入的內容不需要加上引號'')
+ * 將.env寫進.gitignore
 ```
 FACEBOOK_ID=你申請的ID
 FACEBOOK_SECRECT=你申請的密碼
