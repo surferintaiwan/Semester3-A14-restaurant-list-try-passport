@@ -35,12 +35,11 @@ db.once('open', () => {
         })
     })
     
-    /* ??助教，原本想把這段放在外面，可是user印出來是undefined
-        User1.findOne({email: 'bbb@xxx.com'}, (err, user) => {
-        console.log('找到了')
+    //??助教，我想說試試看我前面儲存進去的資料是否存在，但為什麼user印出來是null?
+        User.findOne({email: '111@xxx.com'}, (err, user) => {
         console.log(user)
     })
-    */
+    
 
     // ---加入第二位使用者---
     // ??助教，為什麼我把兩個使用者都命明成 user 的話，就會只成功新增一個使用者呢?
