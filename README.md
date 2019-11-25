@@ -3,7 +3,7 @@
 可供用戶註冊、登入、登出，建立專屬於自己收藏的美食餐廳資料。
 --
 ## 網站截圖
-![網站截圖](https://github.com/surferintaiwan/Semester3-A11-restaurant-list-try-RESTful/blob/master/index-photo.png?raw=true)
+![網站截圖](https://raw.githubusercontent.com/surferintaiwan/Semester3-A14-restaurant-list-try-passport/master/login%20page.png)
 
 ---
 
