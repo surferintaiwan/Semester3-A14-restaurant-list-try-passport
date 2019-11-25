@@ -74,13 +74,36 @@ password: '123'
 Gusto Pizza,
 WXYZ Bar
 
-5. 於終端機啟用並監聽伺服器
+5. 新增環境變數.env檔案
+由於設置passport.facebook時，需要輸入你在facebook developer申請的app帳號跟密碼，有將之儲存在.env中，並且把.env放進.gitignore，這樣在上傳gitghub時，就不會看到環境變數。
+
+步驟如下:
+ * 前往facebook developer建立應用程式
+ * 選擇產品為facebook登入
+ * 在設定頁面拿到ID跟密碼
+ * 在設定頁面輸入有效的OAuth重新導向URL>http://localhost:3000/auth/facebook/callback
+ * 請在根目錄下新增.env
+ * 檔案內儲存如下(記得輸入的內容不需要加上引號'')
+```
+FACEBOOK_ID=你申請的ID
+FACEBOOK_SECRECT=你申請的密碼
+FACEBOOK_CALLBACK=callback路徑
+```
+
+```
+// 範例
+FACEBOOK_ID=123456789
+FACEBOOK_SECRECT=jfjfeijkmx45775
+FACEBOOK_CALLBACK=http://localhost:3000/auth/facebook/callback
+```
+
+6. 於終端機啟用並監聽伺服器
 ```
 nodemon app.js
 ```
-6. 於瀏覽器輸入 [http://localhost:3000/](http://localhost:3000/) 即可開始使用建立於本地端之餐廳網站
+7. 於瀏覽器輸入 [http://localhost:3000/](http://localhost:3000/) 即可開始使用建立於本地端之餐廳網站
 
-7. 若欲停止伺服器運行，可於終端機輸入Ctrl + C ，即可停用伺服器
+8. 若欲停止伺服器運行，可於終端機輸入Ctrl + C ，即可停用伺服器
 
 ---
 
